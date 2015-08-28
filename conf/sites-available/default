@@ -11,6 +11,7 @@ server {
 
     location ~ \.php$ {
         include common/fastcgi-php.conf;
+        fastcgi_param  APP_ENVIRONMENT     "production";
         fastcgi_pass phpfpm:9000;
     }
 }
