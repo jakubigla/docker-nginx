@@ -25,14 +25,16 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base nano && \
     rm -rf /var/cache/apk/*
 
 # forward request and error logs to docker log collector
-#RUN ln -sf /dev/stdout /var/log/nginx/access.log
-#RUN ln -sf /dev/stderr /var/log/nginx/error.log
+RUN ln -sf /dev/stdout /var/log/nginx/access.log
+RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 RUN rm -rf /etc/nginx/*
 ADD ./conf /etc/nginx/
 RUN mkdir -p /etc/nginx/sites-enabled && cd /etc/nginx/sites-enabled && ln -s ../sites-available/default
 
 VOLUME ["/var/log/nginx"]nginx
+
+RUN chmod 0775 /var/log/nginx
 
 WORKDIR /etc/nginx
 
